@@ -22,3 +22,8 @@ TMPTIME=0
 
 # automatically repair filesystems with inconsistencies during boot
 FSCKFIX=yes
+
+RAMRUN=yes
+
+RAMLOCK=yes
+
