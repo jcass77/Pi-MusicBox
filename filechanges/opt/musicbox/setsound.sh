@@ -74,7 +74,7 @@ if [[ $INI_READ != true ]]
 then
     echo "read ini"
     # Import ini parser
-    . /opt/musicbox/read_ini.sh --allow_no_value
+    . /opt/musicbox/read_ini.sh
 
     # Convert windows ini to unix
     dos2unix -n $CONFIG_FILE /tmp/settings.ini > /dev/null 2>&1 || true
@@ -84,7 +84,7 @@ then
     declare -A INI
 
     # ini vars to mopidy settings
-    read_ini /tmp/settings.ini
+    read_ini -nv /tmp/settings.ini
 
     rm /tmp/settings.ini > /dev/null 2>&1 || true
 fi
