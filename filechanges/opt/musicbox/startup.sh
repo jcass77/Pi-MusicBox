@@ -185,9 +185,9 @@ if [ "$INI__network__mount_address" != "" ]
 then
     #mount samba share, readonly
     log_progress_msg "Mounting Samba share..." "$NAME"
-#    mount -t cifs -o sec=ntlm,ro,user=$INI__network__mount_user,password=$INI__network__mount_password $INI__network__mount_address /music/Network/
+#    mount -t cifs -o sec=ntlm,ro,user=$INI__network__mount_user,password=$INI__network__mount_password "$INI__network__mount_address" /music/Network/
 # Uncomment this line for samba shares on Mac OS X
-    mount -t cifs -o sec=ntlmssp,ro,nounix,noserverino,user=$INI__network__mount_user,password=$INI__network__mount_password $INI__network__mount_address /music/Network/
+    mount -t cifs -o sec=ntlmssp,ro,nounix,noserverino,user=$INI__network__mount_user,password=$INI__network__mount_password "$INI__network__mount_address" /music/Network/
 #    mount -t cifs -o sec=ntlm,ro,rsize=2048,wsize=4096,cache=strict,user=$INI__network__mount_user,password=$INI__network__mount_password $INI__network__mount_address /music/Network/
 #add rsize=2048,wsize=4096,cache=strict because of usb (from raspyfi)
 fi

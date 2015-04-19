@@ -130,11 +130,6 @@ case $OUTPUT in
         enumerate_alsa_cards $OUTPUT
         CARD=$I2S_CARD
         ;;
-    hifiberry_amp)
-        modprobe snd_soc_hifiberry_amp
-        enumerate_alsa_cards $OUTPUT
-        CARD=$I2S_CARD
-        ;;
     iqaudio_dac)
         modprobe snd_soc_pcm512x
         modprobe snd_soc_iqaudio_dac
