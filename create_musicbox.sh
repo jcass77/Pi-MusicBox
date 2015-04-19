@@ -25,7 +25,7 @@ ntpdate -u ntp.ubuntu.com
 #sudo apt-get update && sudo apt-get --yes --no-install-suggests --no-install-recommends install logrotate alsa-utils wpasupplicant gstreamer0.10-alsa ifplugd gstreamer0.10-fluendo-mp3 gstreamer0.10-tools samba dos2unix avahi-utils alsa-base cifs-utils avahi-autoipd libnss-mdns ntpdate ca-certificates ncmpcpp rpi-update linux-wlan-ng alsa-firmware-loaders iw atmel-firmware firmware-atheros firmware-brcm80211 firmware-ipw2x00 firmware-iwlwifi firmware-libertas firmware-linux firmware-linux-nonfree firmware-ralink firmware-realtek zd1211-firmware linux-wlan-ng-firmware alsa-firmware-loaders iptables build-essential python-dev python-pip python-gst0.10 gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly usbmount monit upmpdcli watchdog cifs-utils dropbear mpc dosfstools
 
 #mopidy from pip
-sudo pip install -U mopidy mopidy-spotify mopidy-local-sqlite mopidy-local-whoosh mopidy-scrobbler mopidy-soundcloud mopidy-dirble mopidy-tunein mopidy-gmusic mopidy-subsonic mopidy-mobile mopidy-moped mopidy-musicbox-webclient mopidy-websettings mopidy-internetarchive mopidy-podcast mopidy-podcast-itunes mopidy-podcast-gpodder.net Mopidy-Simple-Webclient mopidy-somafm mopidy-spotify-tunigo mopidy-youtube
+#sudo pip install -U mopidy mopidy-spotify mopidy-local-sqlite mopidy-local-whoosh mopidy-scrobbler mopidy-soundcloud mopidy-dirble mopidy-tunein mopidy-gmusic mopidy-subsonic mopidy-mobile mopidy-moped mopidy-musicbox-webclient mopidy-websettings mopidy-internetarchive mopidy-podcast mopidy-podcast-itunes mopidy-podcast-gpodder.net Mopidy-Simple-Webclient mopidy-somafm mopidy-spotify-tunigo mopidy-youtube
 
 #Google Music works a lot better if you use the development version of mopidy-gmusic:
 #sudo pip install https://github.com/hechtus/mopidy-gmusic/archive/develop.zip
@@ -37,7 +37,7 @@ cd /opt
 #wget https://github.com/woutervanwijk/Pi-MusicBox/archive/master.zip
 
 # Use localised version instead
-rsync -r --links jcass@192.168.0.32:/Users/jcass/PycharmProjects/Mopidy/Pi-MusicBox/ ./Pi-MusicBox-master/
+rsync -r --links jcass@192.168.0.104:/Users/jcass/PycharmProjects/Mopidy/Pi-MusicBox/ ./Pi-MusicBox-master/
 
 #Unpack the zip-file and remove it if you want.
 #unzip master.zip
