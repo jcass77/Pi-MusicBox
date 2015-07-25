@@ -269,7 +269,7 @@ for CTL in \
     Center
 do
     # Set initial hardware volume
-    amixer set -c $CARD "$CTL" 96% unmute > /dev/null 2>&1 || true 
+    amixer set -c $CARD "$CTL" 81% unmute > /dev/null 2>&1 || true
     #amixer set -c $CARD "$CTL" ${VOLUME}% unmute > /dev/null 2>&1 || true 
 done
 
@@ -277,27 +277,11 @@ done
 amixer -c 0 set PCM playback 98% > /dev/null 2>&1 || true &
 #amixer -c 0 set PCM playback ${VOLUME}% > /dev/null 2>&1 || true &
 
-set_equalizer_curve() {
-  curve="${*}"
-  ctl=0
-  for point in ${curve}
-  do
-    ctl=$(( ${ctl} + 1 ))
-    echo cset numid=${ctl} ${point}
-  done | amixer -D equal -s
-}
 
-echo "Configuring equalizer profile..."
-case "${INI["musicbox__equalizer_profile"]}" in
-flat) curve="65 65 65 65 65 65 65 65 65 65" ;;
-default) curve="66 68 70 68 66 66 64 62 60 58" ;;
-custom) curve=;;
-*) echo "Unknown profile '${INI["musicbox__equalizer_profile"]}'" ;;
-esac
-
-if [[ -n "$curve" ]]
+if [ "${INI["musicbox__equalizer_profile"]}" != "custom" ]
 then
-    [ "${curve}" ] && set_equalizer_curve "${curve}"
-    echo "Equalizer profile set to '${INI["musicbox__equalizer_profile"]}'"
+    echo "Setting equalizer profile to ${INI["musicbox__equalizer_profile"]}"
+    sh /opt/musicbox/set_equalizer_preset.sh ${INI["musicbox__equalizer_profile"]}
 fi
+
 log_end_msg
