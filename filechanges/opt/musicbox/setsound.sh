@@ -193,7 +193,6 @@ pcm.plugequal {
 #            buffer_size 131072
     }
 }
-}
 ctl.!default {
     type hw
     card $CARD
