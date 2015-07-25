@@ -188,7 +188,7 @@ pcm.!default {
 pcm.plugequal {
     type dmix
     ipc_key 1024
-    controls "/home/mopidy/.alsaequal.bin"
+    controls "/var/lib/alsa/alsaequal.bin"
     slave.pcm {
         "plughw:$CARD,0";
         rate 44100
@@ -203,7 +203,7 @@ ctl.!default {
 }
 ctl.equal {
     type equal;
-    controls "/home/mopidy/.alsaequal.bin"
+    controls "/var/lib/alsa/alsaequal.bin"
 }
 pcm.equal {
     type plug;
@@ -222,12 +222,12 @@ ctl.!default {
 }
 ctl.equal {
     type equal;
-    controls "/home/mopidy/.alsaequal.bin"
+    controls "/var/lib/alsa/alsaequal.bin"
 }
 pcm.plugequal {
     type equal;
     slave.pcm "plughw:$CARD,0";
-    controls "/home/mopidy/.alsaequal.bin"
+    controls "/var/lib/alsa/alsaequal.bin"
 }
 pcm.equal {
     type plug;
@@ -276,4 +276,28 @@ done
 # Set PCM of Pi higher, because it's really quiet otherwise (hardware thing)
 amixer -c 0 set PCM playback 98% > /dev/null 2>&1 || true &
 #amixer -c 0 set PCM playback ${VOLUME}% > /dev/null 2>&1 || true &
+
+set_equalizer_curve() {
+  curve="${*}"
+  ctl=0
+  for point in ${curve}
+  do
+    ctl=$(( ${ctl} + 1 ))
+    echo cset numid=${ctl} ${point}
+  done | amixer -D equal -s
+}
+
+echo "Configuring equalizer profile..."
+case "${INI["audio__equalizer_profile"]}" in
+flat) curve="65 65 65 65 65 65 65 65 65 65" ;;
+default) curve="66 68 70 68 66 66 64 62 60 58" ;;
+custom) curve=;;
+*) echo "Unknown profile '${INI["audio__equalizer_profile"]}'" ;;
+esac
+
+if [[ -n "$curve" ]]
+then
+    [ "${curve}" ] && set_equalizer_curve "${curve}"
+    echo "Equalizer profile set to '${INI["audio__equalizer_profile"]}'"
+fi
 log_end_msg
