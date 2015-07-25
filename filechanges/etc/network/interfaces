@@ -16,7 +16,7 @@ allow-hotplug wlan0
 
 iface wlan0 inet static
 wpa-conf /etc/wpa.conf
-address 192.168.0.105
+address 192.168.0.106
 netmask 255.255.255.0
 gateway 192.168.0.1
 
