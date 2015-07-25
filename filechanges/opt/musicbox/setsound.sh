@@ -288,16 +288,16 @@ set_equalizer_curve() {
 }
 
 echo "Configuring equalizer profile..."
-case "${INI["audio__equalizer_profile"]}" in
+case "${INI["musicbox__equalizer_profile"]}" in
 flat) curve="65 65 65 65 65 65 65 65 65 65" ;;
 default) curve="66 68 70 68 66 66 64 62 60 58" ;;
 custom) curve=;;
-*) echo "Unknown profile '${INI["audio__equalizer_profile"]}'" ;;
+*) echo "Unknown profile '${INI["musicbox__equalizer_profile"]}'" ;;
 esac
 
 if [[ -n "$curve" ]]
 then
     [ "${curve}" ] && set_equalizer_curve "${curve}"
-    echo "Equalizer profile set to '${INI["audio__equalizer_profile"]}'"
+    echo "Equalizer profile set to '${INI["musicbox__equalizer_profile"]}'"
 fi
 log_end_msg
