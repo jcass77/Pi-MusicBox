@@ -188,7 +188,7 @@ pcm.!default {
 pcm.plugequal {
     type dmix
     ipc_key 1024
-    controls "/var/lib/alsa/alsaequal.bin"
+    controls "/home/mopidy/.alsaequal.bin"
     slave.pcm {
         "plughw:$CARD,0";
         rate 44100
@@ -203,7 +203,7 @@ ctl.!default {
 }
 ctl.equal {
     type equal;
-    controls "/var/lib/alsa/alsaequal.bin"
+    controls "/home/mopidy/.alsaequal.bin"
 }
 pcm.equal {
     type plug;
@@ -222,12 +222,12 @@ ctl.!default {
 }
 ctl.equal {
     type equal;
-    controls "/var/lib/alsa/alsaequal.bin"
+    controls "/home/mopidy/.alsaequal.bin"
 }
 pcm.plugequal {
     type equal;
     slave.pcm "plughw:$CARD,0";
-    controls "/var/lib/alsa/alsaequal.bin"
+    controls "/home/mopidy/.alsaequal.bin"
 }
 pcm.equal {
     type plug;

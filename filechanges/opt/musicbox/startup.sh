@@ -226,11 +226,13 @@ fi
 # renice mopidy to 19, to have less stutter when playing tracks from spotify (at the start of a track)
 renice 19 `pgrep mopidy`
 
-if [ "${INI["musicbox__autoplay"]}" -a "${INI["musicbox__autoplaymaxwait"]}" ]
+# WORKAROUND for incorrect parsing of 'autoplay' parameter
+#if [ "$INI__musicbox__autoplay" -a "${INI["musicbox__autoplaymaxwait"]}" ]
+if [ "${INI["musicbox__autoplaymaxwait"]}" ]
 then
-    if ! [[ ${INI["musicbox__autoplaymaxwait =~ ^[0-9]*+$ ]] ; then
+    if ! [[ ${INI["musicbox__autoplaymaxwait"]} =~ ^[0-9]*+$ ]] ; then
         log_progress_msg "Value specified for 'autoplaymaxwait' is not a number, defaulting to 60" "$NAME"
-        {INI["musicbox__autoplaymaxwait=60
+        INI["musicbox__autoplaymaxwait"]=60
     fi
     log_progress_msg "Waiting for Mopidy to accept connections..." "$NAME"
     waittime=0
@@ -238,16 +240,18 @@ then
         do
             sleep 1;
             waittime=$((waittime+1));
-            if [ $waittime -gt "${INI["musicbox__autoplaymaxwait"]}" ]
+            if [ $waittime -gt ${INI["musicbox__autoplaymaxwait"]} ]
                 then
                     log_progress_msg "Timeout waiting for Mopidy to start, aborting" "$NAME"
                     break;
             fi
         done
-    if [ $waittime -le "${INI["musicbox__autoplaymaxwait"]}" ]
+    if [ $waittime -le ${INI["musicbox__autoplaymaxwait"]} ]
         then
-            log_progress_msg "Mopidy startup complete, playing "${INI["musicbox__autoplay"]}" "$NAME"
-            mpc add "${INI["musicbox__autoplay"]}"
+            # WORKAROUND for incorrect parsing of 'autoplay' parameter
+            #log_progress_msg "Mopidy startup complete, playing $INI__musicbox__autoplay" "$NAME"
+            log_progress_msg "Mopidy startup complete, playing local:track:MusicBox/thx.m4a" "$NAME"
+            mpc add "local:track:MusicBox/thx.m4a"
             mpc play
     fi
 fi
