@@ -57,7 +57,7 @@ device_tree=
 # Uncomment one of these lines to enable an audio interface
 #dtoverlay=hifiberry-amp
 #dtoverlay=hifiberry-dac
-#dtoverlay=hifiberry-dacplus
+dtoverlay=hifiberry-dacplus
 #dtoverlay=hifiberry-digi
 #dtoverlay=iqaudio-dac
 #dtoverlay=iqaudio-dacplus

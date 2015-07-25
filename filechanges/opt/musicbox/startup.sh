@@ -194,18 +194,18 @@ done
 # set date/time
 ntpdate ntp.ubuntu.com > /dev/null 2>&1 || true
 
-#mount windows share
+#mount samba share
 if [ "$INI__network__mount_address" != "" ]
 then
     #mount samba share, readonly
-    log_progress_msg "Mounting Windows Network drive..." "$NAME"
+    log_progress_msg "Mounting Samba share..." "$NAME"
     if [ "$INI__network__mount_user" != "" ]
     then
         SMB_CREDENTIALS=user=$INI__network__mount_user,password=$INI__network__mount_password
     else
         SMB_CREDENTIALS=guest
     fi
-    mount -t cifs -o sec=ntlm,ro,$SMB_CREDENTIALS "$INI__network__mount_address" /music/Network/
+    mount -t cifs -o sec=ntlmssp,ro,nounix,noserverino,$SMB_CREDENTIALS "$INI__network__mount_address" /music/Network/
 #    mount -t cifs -o sec=ntlm,ro,rsize=2048,wsize=4096,cache=strict,user=$INI__network__mount_user,password=$INI__network__mount_password $INI__network__mount_address /music/Network/
 #add rsize=2048,wsize=4096,cache=strict because of usb (from raspyfi)
 fi

@@ -265,7 +265,7 @@ for CTL in \
     Center
 do
     # Set initial hardware volume
-    amixer set -c $CARD "$CTL" 96% unmute > /dev/null 2>&1 || true 
+    amixer set -c $CARD "$CTL" 81% unmute > /dev/null 2>&1 || true
     #amixer set -c $CARD "$CTL" ${VOLUME}% unmute > /dev/null 2>&1 || true 
 done
 

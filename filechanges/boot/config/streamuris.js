@@ -6,6 +6,13 @@
 
 var streamUris = [];
 //fill with defaults
+    streamUris.push(['5FM', 'mms://216.246.37.51/5fm_22']);
+    streamUris.push(['702', 'mms://216.246.37.51/702_16']);
+    streamUris.push(['94.7', 'http://216.246.37.52:8028/']);
+    streamUris.push(['Classic FM', 'http://216.246.37.52:8020/']);
+    streamUris.push(['Jacaranda FM', 'http://216.246.37.52:8058']);
+    streamUris.push(['RSG', 'mms://216.246.37.51/rsg_22']);
+    streamUris.push(['SA FM', 'mms://216.246.37.51/safm_22']);
     streamUris.push(['NPR 24', 'http://www.npr.org/streams/mp3/nprlive24.pls']);
     streamUris.push(['3FM Dutch', 'http://icecast.omroep.nl/3fm-bb-mp3']);
     streamUris.push(['BBC WorldService', 'http://vprbbc.streamguys.net:8000/vprbbc24.mp3']);
