@@ -183,32 +183,51 @@ then
 cat << EOF > /etc/asound.conf
 pcm.!default {
     type plug
+    slave.pcm plugequal;
+}
+pcm.plugequal {
+    type dmix
+    ipc_key 1024
     slave.pcm {
-        type dmix
-        ipc_key 1024
-        slave {
-            pcm "hw:$CARD"
-            rate 44100
+        "plughw:$CARD,0";
+        rate 44100
 #            period_time 0
 #            period_size 4096
 #            buffer_size 131072
-        }
     }
 }
 ctl.!default {
     type hw
     card $CARD
 }
+ctl.equal {
+    type equal;
+}
+pcm.equal {
+    type plug;
+    slave.pcm plugequal;
+}
 EOF
 else
 cat << EOF > /etc/asound.conf
 pcm.!default {
-    type hw
-    card $CARD
+    type plug
+    slave.pcm plugequal;
 }
 ctl.!default {
     type hw
     card $CARD
+}
+ctl.equal {
+    type equal;
+}
+pcm.plugequal {
+    type equal;
+    slave.pcm "plughw:$CARD,0";
+}
+pcm.equal {
+    type plug;
+    slave.pcm plugequal;
 }
 EOF
 fi
