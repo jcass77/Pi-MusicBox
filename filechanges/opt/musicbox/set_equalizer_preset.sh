@@ -13,7 +13,7 @@ set_equalizer_curve() {
 profile="${1:-flat}"
 case "${profile}" in
 flat) curve="65 65 65 65 65 65 65 65 65 65" ;;
-custom) curve=;;
+custom) curve="65 68 71 68 65 65 65 65 65 65";;
 classical) curve="71 71 71 71 71 71 84 83 83 87" ;;
 club) curve="71 71 67 63 63 63 67 71 71 71" ;;
 dance) curve="57 61 69 71 71 81 83 83 71 71" ;;
