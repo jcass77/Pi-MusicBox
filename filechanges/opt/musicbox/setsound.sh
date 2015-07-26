@@ -276,8 +276,8 @@ amixer -c 0 set PCM playback 98% > /dev/null 2>&1 || true &
 
 if [ "$INI__musicbox__equalizer_profile" != "custom" ]
 then
-    echo "Setting equalizer profile to $INI__musicbox__equalizer_profile"
-    sh /opt/musicbox/set_equalizer_preset.sh $INI__musicbox__equalizer_profile
+    echo "Setting equalizer profile to '$INI__musicbox__equalizer_profile'"
+    sh /opt/musicbox/set_equalizer_preset.sh $INI__musicbox__equalizer_profile $INI__audio__mixer_volume
 fi
 
 log_end_msg
