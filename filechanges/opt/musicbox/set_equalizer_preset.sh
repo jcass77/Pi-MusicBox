@@ -1,92 +1,41 @@
 #!/bin/sh
-
-get_high_value() {
-    values="${*}"
-    high_value=0
-
-    for x in ${values}
-    do
-        if [ $x -gt $high_value ]
-        then
-            high_value=$x
-        fi
-    done
-    echo $high_value
-}
-
-get_low_value() {
-    values="${*}"
-    low_value=0
-
-    for x in ${values}
-    do
-        if [ $x -lt low_value ]
-        then
-            $low_value=$x
-        fi
-    done
-    echo $low_value
-}
+#
+# MusicBox equalizer presets script.
+#
 
 set_equalizer_curve() {
-    curve="${*}"
-    ctl=0
-    gain_adjust=0
-    #get_high_value $curve
-    #high_value=$?
-    high_value=$(get_high_value $curve)
-    low_value=$(get_low_value $curve)
-
-    if [ ${high_value} -gt $max_gain ]
-    then
-        gain_adjust=$(($high_value-$max_gain))
-        echo "Profile '$profile' exceeds max gain limit, scaling down by $gain_adjust%"
-    fi
-
-    for point in ${curve}
-    do
-        ctl=$(( ${ctl} + 1 ))
-        echo cset numid=${ctl} $(($point-$gain_adjust+1))
-    done | amixer -D equal -s
-}
-
-generate_perfect_curve() {
-    gain_curve="3 6 9 7 6 5 7 9 11 8"
-
-    high_value=$(get_high_value $gain_curve)
-    base_value=$(($max_gain-$high_value))
-
-    for point in ${gain_curve}
-    do
-        echo "$(($base_value+$point)) "
-    done
+  curve="${*}"
+  ctl=0
+  for point in ${curve}
+  do
+    ctl=$(( ${ctl} + 1 ))
+    echo cset numid=${ctl} ${point}
+  done | amixer -D equal -s
 }
 
 profile="${1:-flat}"
-max_gain=${2:-85}
-
 case "${profile}" in
-    off) curve=;;
-    default) curve="25 65 0 65 65 65 65 65 65 65" ;;
-    flat) curve="65 65 65 65 65 65 65 65 65 65" ;;
-    custom) curve=;;
-    classical) curve="71 71 71 71 71 71 84 83 83 87" ;;
-    club) curve="71 71 67 63 63 63 67 71 71 71" ;;
-    dance) curve="57 61 69 71 71 81 83 83 71 71" ;;
-    headphones) curve="65 55 64 77 75 70 65 57 52 49" ;;
-    bass) curve="59 59 59 63 70 78 85 88 89 89" ;;
-    treble) curve="87 87 87 78 68 55 47 47 47 45" ;;
-    large_hall) curve="56 56 63 63 71 79 79 79 71 71" ;;
-    live) curve="79 71 66 64 63 63 66 68 68 69" ;;
-    party) curve="61 61 71 71 71 71 71 71 61 61" ;;
-    perfect) curve="$(generate_perfect_curve)" ;;
-    pop) curve="74 65 61 60 64 73 75 75 74 74" ;;
-    reggae) curve="71 71 72 81 71 62 62 71 71 71" ;;
-    rock) curve="58 63 80 84 77 66 58 55 55 55" ;;
-    ska) curve="75 79 78 72 66 63 58 57 55 57" ;;
-    soft_rock) curve="66 66 69 72 78 80 77 72 68 58" ;;
-    soft) curve="65 70 73 75 73 66 59 57 55 53" ;;
-    techno) curve="60 63 71 80 79 71 60 57 57 58" ;;
+    off) curve= ;;
+    default) curve="-  65 25 65 65 65 65 65 65 65 " ;;
+    flat) curve="65 65 65 65 65 65 65 65 65 65 " ;;
+    custom) curve= ;;
+    classical) curve="59 59 59 59 59 59 62 62 62 62 " ;;
+    club) curve="59 59 58 58 58 58 58 59 59 59 " ;;
+    dance) curve="56 57 59 59 59 61 62 62 59 59 " ;;
+    headphones) curve="58 56 58 60 60 59 58 56 55 55 " ;;
+    bass) curve="57 57 57 58 59 61 62 63 63 63 " ;;
+    treble) curve="62 62 62 61 59 56 54 54 54 54 " ;;
+    large_hall) curve="56 56 58 58 59 61 61 61 59 59 " ;;
+    live) curve="61 59 58 58 58 58 58 59 59 59 " ;;
+    party) curve="57 57 59 59 59 59 59 59 57 57 " ;;
+    perfect) curve="50 56 61 58 56 54 58 61 65 60 " ;;
+    pop) curve="60 58 57 57 58 60 60 60 60 60 " ;;
+    reggae) curve="59 59 59 61 59 57 57 59 59 59 " ;;
+    rock) curve="57 58 61 62 60 58 57 56 56 56 " ;;
+    ska) curve="60 61 61 59 58 58 57 56 56 56 " ;;
+    soft_rock) curve="58 58 59 59 61 61 60 59 59 57 " ;;
+    soft) curve="58 59 60 60 60 58 57 56 56 56 " ;;
+    techno) curve="57 58 59 61 61 59 57 56 56 57 " ;;
     *) echo "Unknown profile ${profile}" >&2 ;;
 esac
 

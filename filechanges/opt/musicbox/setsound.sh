@@ -177,12 +177,8 @@ if [ "$OUTPUT" == "usb" -a "$INI__musicbox__downsample_usb" == "1" ]
 #if [ "$OUTPUT" == "usb" ]
 then
 cat << EOF > /etc/asound.conf
-pcm.!default {
-    type plug
-    slave.pcm plugequal;
-}
 pcm.plugequal {
-    type dmix
+    type equal
     ipc_key 1024
     controls "/home/mopidy/.alsaequal.bin"
     slave.pcm {
@@ -193,42 +189,54 @@ pcm.plugequal {
 #            buffer_size 131072
     }
 }
-ctl.!default {
-    type hw
-    card $CARD
-}
-ctl.equal {
-    type equal;
-    controls "/home/mopidy/.alsaequal.bin"
-}
-pcm.equal {
-    type plug;
-    slave.pcm plugequal;
+pcm.noequal {
+    type dmix
+    ipc_key 1024
+    slave.pcm {
+        "plughw:$CARD,0";
+        rate 44100
+#            period_time 0
+#            period_size 4096
+#            buffer_size 131072
+    }
 }
 EOF
 else
 cat << EOF > /etc/asound.conf
-pcm.!default {
-    type plug
-    slave.pcm plugequal;
-}
-ctl.!default {
-    type hw
-    card $CARD
-}
-ctl.equal {
-    type equal;
-    controls "/home/mopidy/.alsaequal.bin"
-}
 pcm.plugequal {
     type equal;
     slave.pcm "plughw:$CARD,0";
     controls "/home/mopidy/.alsaequal.bin"
 }
+pcm.noequal {
+    type hw
+    card $CARD
+}
+EOF
+fi
+cat << EOF >> /etc/asound.conf
+ctl.equal {
+    type equal;
+    controls "/home/mopidy/.alsaequal.bin"
+}
+ctl.noequal {
+    type hw
+    card $CARD
+}
 pcm.equal {
     type plug;
     slave.pcm plugequal;
 }
+ctl.!default noequal;
+EOF
+if [ "$INI__musicbox__equalizer_profile" == "0" ]
+then
+cat << EOF >> /etc/asound.conf
+pcm.!default noequal;
+EOF
+else
+cat << EOF >> /etc/asound.conf
+pcm.!default equal;
 EOF
 fi
 
@@ -274,7 +282,7 @@ amixer -c 0 set PCM playback 98% > /dev/null 2>&1 || true &
 #amixer -c 0 set PCM playback ${VOLUME}% > /dev/null 2>&1 || true &
 
 
-if [ "$INI__musicbox__equalizer_profile" != "custom" ]
+if [ "$INI__musicbox__equalizer_profile" != "custom" -a "$INI__musicbox__equalizer_profile" != "0" ]
 then
     echo "Setting equalizer profile to '$INI__musicbox__equalizer_profile'"
     sh /opt/musicbox/set_equalizer_preset.sh $INI__musicbox__equalizer_profile $INI__audio__mixer_volume
