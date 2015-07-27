@@ -28,23 +28,6 @@ get_low_value() {
     echo $low_value
 }
 
-normalize() {
-    values="${*}"
-    for x in ${values}
-    do
-        total[i]+=$i;
-        totalSquared[i]+=$i^2;
-    }
-    numberColumn=NF;
-END{
-    for (i=1;i <= numberColumn;i++)
-    {
-        media=total[i]/NR;
-        printf("%.2f|%.2f\n",media,sqrt((totalSquared[i]/NR)-media^2));
-    }
-}
-}
-
 set_equalizer_curve() {
     curve="${*}"
     ctl=0
@@ -83,6 +66,8 @@ profile="${1:-flat}"
 max_gain=${2:-85}
 
 case "${profile}" in
+    off) curve=;;
+    default) curve="25 65 0 65 65 65 65 65 65 65" ;;
     flat) curve="65 65 65 65 65 65 65 65 65 65" ;;
     custom) curve=;;
     classical) curve="71 71 71 71 71 71 84 83 83 87" ;;
