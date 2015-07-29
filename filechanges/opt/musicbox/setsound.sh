@@ -298,5 +298,4 @@ then
     rm /home/mopidy/.alsaequal.bin
 fi
 
-
 log_end_msg
