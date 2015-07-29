@@ -276,7 +276,7 @@ for CTL in \
     Center
 do
     # Set initial hardware volume
-    #amixer set -c $CARD "$CTL" ${VOLUME}% unmute > /dev/null 2>&1 || true
+    amixer set -c $CARD "$CTL" ${VOLUME}% unmute > /dev/null 2>&1 || true
 done
 
 # Set PCM of Pi higher, because it's really quiet otherwise (hardware thing)
