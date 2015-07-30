@@ -33,6 +33,7 @@ case "${profile}" in
     soft_rock) curve="55 55 58 60 64 65 63 60 57 50" ;;
     soft) curve="58 62 64 65 64 59 54 53 51 50" ;;
     techno) curve="52 54 59 65 64 59 52 50 50 51" ;;
+    favorite) curve="65 65 65 62 58 53 55 57 62 55" ;;
     *) echo "Unknown profile ${profile}" >&2 ;;
 esac
 
