@@ -266,9 +266,10 @@ then
         then
             log_progress_msg "Mopidy startup complete, playing $INI__musicbox__autoplay" "$NAME"
             mpc add "$INI__musicbox__autoplay"
-            mpc play
+            mpc play; mpc idle player; mpc clear
     fi
 fi
+mpc repeat on
 
 
 # check and clean dirty bit of vfat partition if not safely removed
